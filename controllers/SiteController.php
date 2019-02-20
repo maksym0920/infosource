@@ -17,7 +17,6 @@ class SiteController extends BaseController
         $currentNumber = 1;
         $data['menu'] = $this->generateElement(5, $currentNumber);
         return $this->render('index', $data);
-
     }
 
     private function generateElement($depth, &$currentNumber)
