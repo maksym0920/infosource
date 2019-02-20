@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\db\Exception;
 
 class SiteController extends BaseController
 {
@@ -38,8 +37,9 @@ class SiteController extends BaseController
         return $answer;
     }
 
-    private function recapchaValidate($recaptchaResponse)
+    private function recaptchaValidate($recaptchaResponse)
     {
+        $answer = false;
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $data = array(
             'secret' => '6Le1rJIUAAAAACalVBDOiU9nssTlnXbipcRhjMsy',
@@ -51,10 +51,41 @@ class SiteController extends BaseController
                 'content' => http_build_query($data)
             )
         );
-        $context = stream_context_create($options);
-        $verify = file_get_contents($url, false, $context);
-        $captcha_success = json_decode($verify);
-        return $captcha_success->success;
+        try {
+            $context = stream_context_create($options);
+            $verify = file_get_contents($url, false, $context);
+            $captcha_success = json_decode($verify);
+            $answer = $captcha_success->success;
+        } catch (\Exception $e) {
+        }
+
+        return $answer;
+    }
+
+    private function getRandomGift()
+    {
+        $answer = '';
+        $url = 'http://api.giphy.com/v1/gifs/random';
+        $data = array(
+            'api_key' => 'PMSvP7vneMd16Prs1PA1h2QU5a91uyxG',
+            'limit' => '1'
+        );
+        $options = array(
+            'http' => array(
+                'method' => 'GET',
+                'content' => http_build_query($data)
+            )
+        );
+        try {
+            $context = stream_context_create($options);
+            $image = file_get_contents($url, false, $context);
+            $image = json_decode($image, true);
+            if (!empty($image['data']['image_url'])) {
+                $answer = $image['data']['image_url'];
+            }
+        } catch (\Exception $e) {
+        }
+        return $answer;
     }
 
     public function actionGetImage()
@@ -67,17 +98,15 @@ class SiteController extends BaseController
 
         $recaptcha = Yii::$app->request->post('g-recaptcha-response');
 
-        try {
-            if(!$this->recapchaValidate($recaptcha)) {
-                throw new Exception('введите капчу');
-            }
+        if ($this->recaptchaValidate($recaptcha)) {
             $json['success'] = true;
-        } catch (\Exception $e) {
-            $json['errorMsg'] = $e->getMessage();
+            $json['image'] = $this->getRandomGift();
+        } else {
+            $json['errorMsg'] = 'Введите капчу';
         }
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
         return $json;
-        //var_dump(Yii::$app->request->post());
     }
 }

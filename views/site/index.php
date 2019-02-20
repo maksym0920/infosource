@@ -53,7 +53,12 @@ function showMenu(&$menu)
             <label class="control-label" for="custom-title">Случайный текст</label>
             <input type="text" id="custom-title" class="form-control" name="custom" value="" maxlength="200">
             <hr/>
-            <div class="g-recaptcha" data-sitekey="6Le1rJIUAAAAAKuABeUn_RzdZSkta-v9GAi8WFTf"></div>
+            <div class="text-center" id="image-content">
+              <img class="" height="100" width="100" src="">
+            </div>
+            <div class="block" id="captcha-content">
+              <div class="g-recaptcha" data-sitekey="6Le1rJIUAAAAAKuABeUn_RzdZSkta-v9GAi8WFTf"></div>
+            </div>
           </div>
         </form>
       </div>

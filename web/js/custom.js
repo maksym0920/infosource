@@ -1,9 +1,20 @@
+var Functions = {
+  showImage: function () {
+    $('#captcha-content').addClass('hide');
+    $('#image-content').removeClass('hide');
+  },
+  showCaptcha: function () {
+    $('#captcha-content').removeClass('hide');
+    $('#image-content').addClass('hide');
+  }
+};
+
 $(function () {
   $('.node').click(function () {
     $('#node-number').val(this.dataset.number);
     $('#exampleModalLabel>span').text(this.dataset.number);
-
-    if(typeof grecaptcha == 'object') {
+    Functions.showCaptcha();
+    if (typeof grecaptcha == 'object') {
       grecaptcha.reset();
     }
 
@@ -17,8 +28,19 @@ $(function () {
       url: '/get-image',
       data: $('#image-form').serialize(),
       dataType: 'json',
-      success: function(json) {
-        console.log(json);
+      success: function (json) {
+        if (json.success) {
+          if (json.image) {
+            $('#image-content > img').attr('src', json.image);
+            Functions.showImage();
+          } else {
+            //...
+          }
+        } else {
+          if (json.errorMsg) {
+            alert(json.errorMsg);
+          }
+        }
       },
     });
   });
