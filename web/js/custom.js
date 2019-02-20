@@ -42,8 +42,11 @@ $(function () {
       },
       success: function (json) {
         if (json.success) {
-          if (json.image) {
-            $('#image-content > img').attr('src', json.image);
+          if (json.image.url) {
+            let img = $('#image-content > img');
+            img.attr('src', json.image.url);
+            img.attr('height', json.image.height);
+            img.attr('width', json.image.width);
             Functions.showImage();
           } else {
             //...

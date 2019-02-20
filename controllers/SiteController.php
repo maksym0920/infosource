@@ -64,7 +64,11 @@ class SiteController extends BaseController
 
     private function getRandomGift()
     {
-        $answer = '';
+        $answer = [
+            'url' => '',
+            'width' => '0',
+            'height' => '0',
+        ];
         $url = 'http://api.giphy.com/v1/gifs/random';
         $data = array(
             'api_key' => 'PMSvP7vneMd16Prs1PA1h2QU5a91uyxG',
@@ -80,8 +84,10 @@ class SiteController extends BaseController
             $context = stream_context_create($options);
             $image = file_get_contents($url, false, $context);
             $image = json_decode($image, true);
-            if (!empty($image['data']['image_url'])) {
-                $answer = $image['data']['image_url'];
+            if (!empty($image['data'])) {
+                $answer['url'] = $image['data']['image_url'];
+                $answer['height'] = $image['data']['image_height'];
+                $answer['width'] = $image['data']['image_width'];
             }
         } catch (\Exception $e) {
         }
