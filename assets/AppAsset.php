@@ -23,7 +23,8 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/custom.js'
+        'js/custom.js',
+        'https://www.google.com/recaptcha/api.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

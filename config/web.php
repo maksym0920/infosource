@@ -52,6 +52,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                'POST /get-image' => 'site/get-image',
             ],
         ],
 

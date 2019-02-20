@@ -19,6 +19,11 @@ class SiteController extends BaseController
         return $this->render('index', $data);
     }
 
+    public function actionGetImage()
+    {
+        var_dump(Yii::$app->request->post());
+    }
+
     private function generateElement($depth, &$currentNumber)
     {
         $answer = [];

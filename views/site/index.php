@@ -40,23 +40,25 @@ function showMenu(&$menu)
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Узел <span></span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="form">
-          <input type="hidden" name="nodeNumber" value="">
+        <form id="image-form">
+          <input type="hidden" id="node-number" name="nodeNumber" value="">
+          <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
           <div class="form-group required">
-            <label class="control-label" for="custom-title">custom text</label>
-            <input type="text" id="custom-title" class="form-control" name="node[custom]" value="" maxlength="200">
+            <label class="control-label" for="custom-title">Случайный текст</label>
+            <input type="text" id="custom-title" class="form-control" name="custom" value="" maxlength="200">
+            <hr/>
+            <div class="g-recaptcha" data-sitekey="6Le1rJIUAAAAAKuABeUn_RzdZSkta-v9GAi8WFTf"></div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <?php /*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*/ ?>
-        <button type="button" class="btn btn-primary">get image</button>
+        <button type="button" id="button-send" class="btn btn-primary">Продолжить</button>
       </div>
     </div>
   </div>
