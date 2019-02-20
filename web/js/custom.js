@@ -15,9 +15,10 @@ $(function () {
     $.ajax({
       type: 'POST',
       url: '/get-image',
-      data: {},
+      data: $('#image-form').serialize(),
       dataType: 'json',
       success: function(json) {
+        console.log(json);
       },
     });
   });
