@@ -39,6 +39,8 @@ function showMenu(&$menu)
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div class="overlay hide">
+      </div>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Узел <span></span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -63,6 +65,7 @@ function showMenu(&$menu)
         </form>
       </div>
       <div class="modal-footer">
+        <button type="button" id="button-close" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
         <button type="button" id="button-send" class="btn btn-primary">Продолжить</button>
       </div>
     </div>

@@ -2,10 +2,16 @@ var Functions = {
   showImage: function () {
     $('#captcha-content').addClass('hide');
     $('#image-content').removeClass('hide');
+
+    $('#button-send').addClass('hide');
+    $('#button-close').removeClass('hide');
   },
   showCaptcha: function () {
     $('#captcha-content').removeClass('hide');
     $('#image-content').addClass('hide');
+
+    $('#button-close').addClass('hide');
+    $('#button-send').removeClass('hide');
   }
 };
 
@@ -28,6 +34,12 @@ $(function () {
       url: '/get-image',
       data: $('#image-form').serialize(),
       dataType: 'json',
+      beforeSend: function() {
+        $('#exampleModal .overlay').removeClass('hide');
+      },
+      complete: function() {
+        $('#exampleModal .overlay').addClass('hide');
+      },
       success: function (json) {
         if (json.success) {
           if (json.image) {
